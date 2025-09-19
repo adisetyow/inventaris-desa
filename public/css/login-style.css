@@ -1,0 +1,177 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(-45deg, #e0eafc, #cfdef3, #a7bfe8, #6190e8);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    z-index: 0;
+
+}
+
+/* Animated Background */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Login Card */
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background-color: rgba(255, 255, 255, 0.92);
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow: hidden;
+    animation: fadeIn 0.6s ease-out forwards;
+    transform: translateY(20px);
+    opacity: 0;
+    position: relative;
+    z-index: 10;
+}
+
+@keyframes fadeIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Header Section */
+.login-header {
+    background: linear-gradient(45deg, #184e99, #6190e8);
+    padding: 30px;
+    text-align: center;
+    color: white;
+}
+
+.logo-img {
+    width: 90px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-header h4 {
+    font-weight: 600;
+    margin: 10px 0 5px;
+    font-size: 1.4rem;
+}
+
+.login-header p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Form Body */
+.login-body {
+    padding: 30px;
+}
+
+.form-floating {
+    margin-bottom: 20px;
+}
+
+.form-floating>.form-control {
+    border-radius: 10px;
+    padding: 16px;
+    height: calc(3.5rem + 2px);
+    border: 1px solid #ddd;
+    transition: all 0.3s;
+}
+
+.form-floating>.form-control:focus {
+    border-color: #6190e8;
+    box-shadow: 0 0 0 3px rgba(97, 144, 232, 0.2);
+}
+
+.form-floating>label {
+    padding: 1rem 0.75rem;
+    color: #777;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #184e99;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #1c5bb5;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(24, 78, 153, 0.3);
+}
+
+/* Utility Elements */
+.d-flex {
+    margin-bottom: 20px;
+}
+
+.forgot-password {
+    color: #184e99;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.forgot-password:hover {
+    color: #1c5bb5;
+    text-decoration: underline;
+}
+
+/* Footer */
+.login-footer {
+    background-color: #f8f9fa;
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+.login-footer p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+/* Alert Styles */
+.alert-danger {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+}

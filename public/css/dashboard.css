@@ -1,0 +1,374 @@
+/* Dashboard Styles for Inventaris Desa */
+
+/* ========== GLOBAL STYLES ========== */
+:root {
+    --primary: #4e73df;
+    --primary-dark: #224abe;
+    --success: #1cc88a;
+    --success-dark: #13855c;
+    --info: #36b9cc;
+    --info-dark: #258391;
+    --warning: #f6c23e;
+    --warning-dark: #dda20a;
+    --danger: #e74a3b;
+    --danger-dark: #be2617;
+    --light: #f8f9fc;
+    --dark: #5a5c69;
+    --gray: #858796;
+}
+
+/* ========== STATS CARDS ========== */
+.stats-card {
+    border-radius: 0.35rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-left: 0.25rem solid !important;
+    overflow: hidden;
+}
+
+.stats-card:hover {
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.stats-card .card-body {
+    padding: 1.25rem;
+}
+
+.stats-card.border-left-primary {
+    border-left-color: var(--primary) !important;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+.stats-card.border-left-success {
+    border-left-color: var(--success) !important;
+    background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
+}
+
+.stats-card.border-left-info {
+    border-left-color: var(--info) !important;
+    background: linear-gradient(135deg, var(--info) 0%, var(--info-dark) 100%);
+}
+
+.stats-card.border-left-warning {
+    border-left-color: var(--warning) !important;
+    background: linear-gradient(135deg, var(--warning) 0%, var(--warning-dark) 100%);
+}
+
+.stats-card.border-left-danger {
+    border-left-color: var(--danger) !important;
+    background: linear-gradient(135deg, var(--danger) 0%, var(--danger-dark) 100%);
+}
+
+/* ========== CHART CONTAINERS ========== */
+.chart-area {
+    position: relative;
+    height: 20rem;
+    width: 100%;
+}
+
+.chart-pie {
+    position: relative;
+    height: 15rem;
+    width: 100%;
+}
+
+/* ========== KONDISI BADGES ========== */
+.text-baik,
+.kondisi-baik {
+    color: var(--success);
+}
+
+.text-rusak,
+.kondisi-rusak {
+    color: var(--danger);
+}
+
+.text-perlu-perbaikan,
+.kondisi-perlu-perbaikan,
+.text-kurang-baik,
+.kondisi-kurang-baik {
+    color: var(--warning);
+}
+
+/* ========== TABLE ROW STYLES ========== */
+.row-rusak {
+    background-color: rgba(231, 74, 59, 0.05);
+}
+
+.row-perlu-perbaikan,
+.row-kurang-baik {
+    background-color: rgba(246, 194, 62, 0.05);
+}
+
+/* ========== BADGE STYLES ========== */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+.badge-rusak {
+    background-color: var(--danger) !important;
+    color: white;
+}
+
+.badge-perlu-perbaikan,
+.badge-kurang-baik {
+    background-color: var(--warning) !important;
+    color: #212529;
+}
+
+.badge-baik {
+    background-color: var(--success) !important;
+    color: white;
+}
+
+/* ========== TIMELINE STYLES ========== */
+.timeline {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 1.5rem;
+    padding-bottom: 1rem;
+    border-left: 2px solid #e3e6f0;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+    border-left: none;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--dark);
+    border-radius: 50%;
+}
+
+/* ========== ACTION ICONS ========== */
+.text-tambah,
+.action-icon-tambah {
+    color: var(--success);
+}
+
+.text-ubah,
+.action-icon-ubah {
+    color: var(--primary);
+}
+
+.text-hapus,
+.text-penghapusan,
+.action-icon-hapus,
+.action-icon-penghapusan {
+    color: var(--danger);
+}
+
+.text-mutasi,
+.action-icon-mutasi {
+    color: var(--info);
+}
+
+.text-login,
+.action-icon-login {
+    color: var(--success);
+}
+
+.text-logout,
+.action-icon-logout {
+    color: var(--warning);
+}
+
+/* ========== CARD HEADERS ========== */
+.card-header.bg-danger {
+    background-color: var(--danger) !important;
+    color: white;
+}
+
+.card-header.bg-warning {
+    background-color: var(--warning) !important;
+    color: #212529;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+    .chart-area {
+        height: 15rem;
+    }
+
+    .chart-pie {
+        height: 12rem;
+    }
+
+    .stats-card {
+        margin-bottom: 1rem;
+    }
+
+    .timeline-item {
+        padding-left: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-area {
+        height: 12rem;
+    }
+
+    .chart-pie {
+        height: 10rem;
+    }
+
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+}
+
+/* ========== TABLE ENHANCEMENTS ========== */
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.table th {
+    background-color: var(--light);
+    border-top: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    font-size: 0.875rem;
+    vertical-align: middle;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* ========== CARD SHADOWS ========== */
+.card.shadow {
+    box-shadow: 0 0.15rem 1.5rem rgba(0, 0, 0, 0.08) !important;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: white;
+}
+
+/* ========== TEXT UTILITIES ========== */
+.text-gray-800 {
+    color: var(--dark) !important;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+}
+
+/* ========== LOADING ANIMATION ========== */
+.loading {
+    position: relative;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========== PRINT STYLES ========== */
+@media print {
+    .card {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+
+    .stats-card {
+        background: white !important;
+        color: black !important;
+    }
+
+    .stats-card .text-white {
+        color: black !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+}
+
+/* ========== DARK MODE SUPPORT ========== */
+@media (prefers-color-scheme: dark) {
+    .card {
+        background-color: #2d3748;
+        border-color: #4a5568;
+    }
+
+    .table {
+        color: #e2e8f0;
+    }
+
+    .table th {
+        background-color: #4a5568;
+        color: #e2e8f0;
+    }
+
+    .text-gray-800 {
+        color: #e2e8f0 !important;
+    }
+
+    .card-header {
+        border-bottom-color: #4a5568;
+    }
+
+    .timeline-item::before {
+        background-color: #e2e8f0;
+    }
+
+
+    /* SOLUSI IKON GANDA */
+    .kategori-options .form-check {
+        padding-left: 0;
+    }
+
+    .kategori-options .form-check-input {
+        position: absolute;
+        left: 1rem;
+        top: 1.2rem;
+    }
+
+    .kategori-options .form-check-label::before,
+    .kategori-options .form-check-label::after {
+        display: none !important;
+    }
+
+    .kategori-options .fa-fw {
+        width: 1.25em;
+        text-align: center;
+    }
+}
