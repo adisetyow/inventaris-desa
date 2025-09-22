@@ -82,6 +82,17 @@ class Inventaris extends Model
         return $this->hasOne(AsetLainnya::class, 'inventaris_id');
     }
 
+    /**
+     * Accessor untuk menghitung total nilai aset.
+     *
+     * @return float
+     */
+    public function getTotalNilaiAttribute()
+    {
+        return $this->attributes['harga_perolehan'] * $this->attributes['jumlah'];
+    }
+
+
     public function penghapusanInventaris()
     {
         return $this->hasMany(PenghapusanInventaris::class, 'inventaris_id_lama');

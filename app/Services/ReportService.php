@@ -29,9 +29,13 @@ class ReportService
 
     public function generateReportStats($inventaris)
     {
+        $totalNilai = $inventaris->sum(function ($item) {
+            return $item->total_nilai;
+        });
+
         return [
             'totalInventaris' => $inventaris->count(),
-            'totalNilai' => $inventaris->sum('harga_perolehan'),
+            'totalNilai' => $totalNilai,
             'kondisiStats' => $inventaris->groupBy('kondisi')->map->count(),
             'kategoriStats' => $inventaris->groupBy('kategori.nama_kategori')->map->count(),
         ];
@@ -88,7 +92,8 @@ class ReportService
                 'Lokasi',
                 'Tanggal Masuk',
                 'Sumber Dana',
-                'Harga Perolehan',
+                'Harga Satuan',
+                'Total Nilai Aset',
                 'Masa Pakai (Tahun)'
             ]);
 
@@ -104,6 +109,7 @@ class ReportService
                     $item->tanggal_masuk,
                     $item->sumber_dana,
                     number_format((float) $item->harga_perolehan, 2),
+                    number_format((float) $item->total_nilai, 2),
                     $item->masa_pakai_tahun ?? '-'
                 ]);
             }

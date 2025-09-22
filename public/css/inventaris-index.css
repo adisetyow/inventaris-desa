@@ -1,116 +1,173 @@
 /* ===================================================================
-   Sistem Inventaris Desa - Refactored Styles (Modern & Responsive)
+   Sistem Inventaris Desa - Modern UI Stylesheet
    =================================================================== */
 
 :root {
-    --primary-color: #4169E1;
-    /* Biru yang lebih modern */
-    --primary-hover: #357ABD;
-    --success-color: #28a745;
-    --danger-color: #dc3545;
-    --warning-color: #ffc107;
-    --secondary-color: #6c757d;
+    /* -- SKEMA WARNA -- */
+    --color-primary: #4169E1;
+    --color-primary-hover: #3558B6;
+    --color-primary-light: #eef2ff;
 
-    --text-dark: #2c3e50;
-    --text-light: #8492a6;
-    --border-color: #e2e8f0;
-    --background-light: #f8f9fa;
-    --background-white: #ffffff;
+    --color-success: #16a34a;
+    --color-success-bg: #f0fdf4;
+    --color-danger: #dc2626;
+    --color-danger-bg: #fef2f2;
+    --color-warning: #f59e0b;
+    --color-warning-bg: #fffbeb;
+    --color-secondary: #64748b;
+    --color-secondary-bg: #f8fafc;
 
-    --font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --border-radius: 0.375rem;
-    /* 6px */
-    --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --transition-speed: 0.2s ease-in-out;
+    /* -- WARNA NETRAL (SLATE PALETTE) -- */
+    --color-slate-50: #f8fafc;
+    --color-slate-100: #f1f5f9;
+    --color-slate-200: #e2e8f0;
+    --color-slate-300: #cbd5e1;
+    --color-slate-400: #94a3b8;
+    --color-slate-500: #64748b;
+    --color-slate-600: #475569;
+    --color-slate-800: #1e293b;
+
+    /* -- TIPOGRAFI & LAYOUT -- */
+    --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --border-radius: 0.5rem;
+    /* 8px */
+    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
-    background-color: var(--background-light);
-    font-family: var(--font-family-sans-serif);
-    color: var(--text-dark);
+    background-color: var(--color-slate-50);
+    font-family: var(--font-family-sans);
+    color: var(--color-slate-800);
 }
 
-/* Page Header */
-.page-header {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
+.page-container {
+    padding-top: 0rem;
+    padding-bottom: 1.5rem;
 }
 
-.page-header .page-title {
-    font-weight: 600;
-}
-
-.page-header .breadcrumb {
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-    font-size: 0.7rem;
-}
-
-/* Tombol Utama (Tambah, Laporan) */
-.btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    transition: var(--transition-speed);
-}
-
-.btn-primary:hover {
-    background-color: var(--primary-hover);
-    border-color: var(--primary-hover);
-}
-
-.btn {
+/* --- KARTU UTAMA (MODERN CARD) --- */
+.modern-card {
+    border: 1px solid var(--color-slate-200);
     border-radius: var(--border-radius);
-    font-weight: 500;
+    box-shadow: var(--shadow-soft);
+    background-color: #ffffff;
 }
 
-/* Kartu Utama */
-.card {
-    border: none;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    overflow: hidden;
-    /* Penting untuk border-radius pada tabel */
-}
-
-/* Header Kartu yang Mengandung Filter */
 .card-header {
-    background-color: var(--background-white);
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    background-color: #ffffff;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--color-slate-200);
+}
+
+.card-header-actions {
+    flex-grow: 1;
+    justify-content: flex-end;
 }
 
 .card-header .card-title {
+    font-size: 1.125rem;
     font-weight: 600;
-    font-size: 1.1rem;
-    color: var(--text-dark);
+    color: var(--color-slate-800);
 }
 
-/* Kontrol Filter yang Baru */
+.btn-primary {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 4px 8px rgba(65, 105, 225, 0.2);
+}
+
+.btn-pill {
+    border-radius: 40px;
+    padding: 6px 16px;
+}
+
+.btn-outline-secondary {
+    border-color: var(--color-slate-300);
+    color: var(--color-slate-600);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--color-slate-100);
+    border-color: var(--color-slate-400);
+    color: var(--color-slate-800);
+}
+
+/* --- KONTROL FILTER --- */
+
+.search-form {
+    min-width: 220px;
+}
+
+.input-group-icon {
+    position: relative;
+}
+
+.input-group-icon .form-control {
+    padding-left: 2.5rem;
+    /* Beri ruang untuk ikon */
+    border-radius: 9999px !important;
+    /* Bentuk pill/kapsul */
+    background-color: var(--color-slate-100);
+    border: 1px solid transparent;
+}
+
+.input-group-icon .form-control:focus {
+    background-color: #ffffff;
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.input-group-icon .input-group-text {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    z-index: 10;
+    color: var(--color-slate-400);
+}
+
+.filter-collapse-container {
+    background-color: var(--color-slate-50);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-slate-200);
+}
+
+
 .filter-controls {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-slate-200);
 }
 
 .filter-controls .form-label {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    color: var(--text-light);
-    margin-bottom: 0.25rem;
+    color: var(--color-slate-500);
+    margin-bottom: 0.5rem;
 }
 
 .filter-controls .form-control,
 .filter-controls .form-select {
-    font-size: 0.9rem;
-    border-radius: var(--border-radius);
+    border-radius: 0.375rem;
+    border-color: var(--color-slate-300);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.filter-controls .input-group .btn {
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+.filter-controls .form-control:focus,
+.filter-controls .form-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
-/* Tabel Kustom */
+
+/* --- TABEL MODERN --- */
 .table-responsive {
     border: none;
 }
@@ -120,93 +177,196 @@ body {
 }
 
 .table thead th {
-    background-color: var(--background-light);
-    color: var(--text-light);
+    background-color: var(--color-slate-50);
+    color: var(--color-slate-500);
     font-weight: 600;
-    text-transform: uppercase;
     font-size: 0.75rem;
-    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     padding: 0.75rem 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--color-slate-200);
     white-space: nowrap;
 }
 
 .table tbody td {
-    padding: 0.9rem 1.5rem;
+    padding: 1rem 1.5rem;
     vertical-align: middle;
     font-size: 0.9rem;
-    border-color: var(--border-color);
-    transition: var(--transition-speed);
+    border-top: 1px solid var(--color-slate-200);
 }
 
-.table tbody tr:hover td {
-    background-color: #f1f5f9;
-    /* Warna hover yang halus */
+.table tbody tr:hover {
+    background-color: var(--color-primary-light);
 }
 
-/* Penyesuaian Kolom Spesifik */
-.table th.text-end,
-.table td.text-end {
-    text-align: right;
+.link-item {
+    font-weight: 500;
+    color: var(--color-slate-800);
+    text-decoration: none;
+    transition: color var(--transition-fast);
 }
 
-.table th.text-center,
-.table td.text-center {
-    text-align: center;
+.link-item:hover {
+    color: var(--color-primary);
 }
 
-.table td.col-aksi {
-    white-space: nowrap;
-    width: 1%;
+.font-monospace {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: var(--color-slate-600);
 }
 
-/* Badge Kustom */
-.badge {
-    padding: 0.4em 0.8em;
-    font-size: 0.75rem;
+
+/* --- STATUS BADGE (GAYA "SOFT") --- */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    border-radius: 50rem;
+    line-height: 1.25;
+    border-radius: 9999px;
     /* Pill shape */
+    white-space: nowrap;
 }
 
-/* Link di dalam tabel */
+.status-badge.status-baik {
+    background-color: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+.status-badge.status-rusak {
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger);
+}
+
+.status-badge.status-perlu-perbaikan {
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning);
+}
+
+.status-badge.status-hilang {
+    background-color: var(--color-secondary-bg);
+    color: var(--color-secondary);
+}
+
+
+/* --- TOMBOL AKSI (ICON BUTTON) --- */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    color: var(--color-slate-400);
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-icon i {
+    font-size: 12px;
+}
+
+.btn-icon.action-view {
+    background-color: #FEF3C7;
+    color: #FACC15;
+    border-radius: 8px;
+    padding: 2px 6px;
+}
+
+.btn-icon.action-edit {
+    background-color: #BFDBFE;
+    color: #60A5FA;
+    /* biru tua biar jelas */
+    border-radius: 8px;
+    padding: 2px 6px;
+}
+
+.btn-icon.action-view:hover {
+    background-color: #FDE68A;
+    color: #92400E;
+    box-shadow: 0 2px 6px rgba(250, 204, 21, 0.4);
+
+}
+
+.btn-icon.action-edit:hover {
+    background-color: #93C5FD;
+    color: #1E3A8A;
+    box-shadow: 0 2px 6px rgba(96, 165, 250, 0.4);
+
+}
+
+
 a.link-item {
     font-weight: 500;
-    color: var(--text-dark);
+    color: var(--color-slate-800);
     text-decoration: none;
-    transition: var(--transition-speed);
+    transition: color var(--transition-fast), text-decoration var(--transition-fast);
 }
 
 a.link-item:hover {
-    color: var(--primary-color);
+    color: var(--color-primary-hover);
+    text-decoration: underline;
 }
 
-/* Pagination */
-.pagination-container {
+.kode-inventaris-link {
+    font-weight: 30;
+    color: var(--color-primary);
+    letter-spacing: 0.005x;
+    transition: color 0.2s ease-in-out;
+}
+
+.kode-inventaris-link:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+}
+
+
+/* --- PAGINATION --- */
+.card-footer.pagination-container {
     padding: 1rem 1.5rem;
-    background-color: var(--background-white);
-    border-top: 1px solid var(--border-color);
+    background-color: #ffffff;
+    border-top: 1px solid var(--color-slate-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-.pagination .page-item .page-link {
-    border-radius: var(--border-radius) !important;
+.pagination {
+    margin: 0;
+}
+
+.pagination .page-link {
+    border-radius: 0.375rem !important;
     margin: 0 2px;
-    border-color: var(--border-color);
-    color: var(--primary-color);
-    transition: var(--transition-speed);
+    border-color: var(--color-slate-200);
+    color: var(--color-slate-500);
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.pagination .page-item:not(.disabled) .page-link:hover {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary-light);
+    color: var(--color-primary);
 }
 
 .pagination .page-item.active .page-link {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
     color: white;
 }
 
-.pagination .page-item:not(.active) .page-link:hover {
-    background-color: #eef5fc;
-}
 
-/* Responsive adjustments */
+/* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 768px) {
 
     .card-header,
@@ -217,15 +377,12 @@ a.link-item:hover {
         padding-right: 1rem;
     }
 
-    /* Agar harga tidak memakan tempat */
-    .table td.col-harga::before {
-        content: "Rp ";
-        font-size: 0.8em;
-        color: var(--text-light);
-        display: block;
+    .card-header-actions {
+        flex-grow: 0;
     }
 
-    .table td.col-harga {
-        line-height: 1.2;
+    /* Sembunyikan kolom 'No' di mobile untuk hemat ruang */
+    .table .column-no {
+        display: none;
     }
 }

@@ -1,207 +1,518 @@
 /* ===================================================================
-   Inventaris Detail Page - Modern & Professional Styles
+   Inventaris Detail - CSS untuk Halaman Detail Inventaris
    =================================================================== */
 
-/* General Page Styles */
-#inventaris-detail-page {
-    padding: 20px;
-    color: #333;
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-}
+/* Menggunakan semua variabel dari inventaris-index.css */
 
-/* Page Header */
+/* --- PAGE HEADER EXTENDED --- */
 .page-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #eaeaea;
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-slate-200);
+    box-shadow: var(--shadow-soft);
 }
 
-.page-header h1 {
+/* header flex (judul + action) */
+.page-header>.d-flex {
+    padding-bottom: 0.75rem;
+}
+
+/* judul utama */
+.page-title {
+    font-size: 1.25rem;
     font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 0;
+    color: var(--color-slate-800);
+    margin: 0;
 }
 
-.page-header .btn {
-    border-radius: 6px;
+/* subtitle di bawah judul */
+.page-subtitle {
+    font-size: 0.875rem;
+    color: var(--color-slate-600);
+    margin-top: 0.25rem;
+}
+
+.subtitle-nama-barang {
     font-weight: 500;
-    margin-left: 0.5rem;
+    font-size: 1rem;
+    color: var(--color-slate-800);
 }
 
-/* Main Detail Card */
-.detail-card {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: 1.5rem;
+/* area tombol/aksi */
+.page-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
-.detail-card>.card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #eaeaea;
+
+/* --- STEP CONTENT STYLES --- */
+.step-content {
+    background-color: #ffffff;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    border: 1px solid var(--color-slate-200);
+    box-shadow: var(--shadow-soft);
 }
 
-.detail-card>.card-header h6 {
-    color: #4e73df;
-    /* Primary Color */
+
+/* --- DETAIL TABLE STYLES --- */
+.detail-table {
+    background-color: #ffffff;
+    border-radius: var(--border-radius);
+}
+
+.detail-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-slate-200);
+    transition: background-color var(--transition-fast);
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row:hover {
+    background-color: var(--color-slate-50);
+    margin: 0 -1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border-radius: var(--border-radius);
+}
+
+.detail-label {
+    width: 35%;
+    font-weight: 500;
+    color: var(--color-slate-600);
+    flex-shrink: 0;
+    padding-right: 1rem;
+}
+
+.detail-value {
+    flex: 1;
+    color: var(--color-slate-800);
+    word-break: break-word;
+}
+
+/* --- SPECIAL BADGES --- */
+.category-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    border-radius: var(--border-radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.quantity-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--color-slate-100);
+    color: var(--color-slate-700);
+    border-radius: 50%;
     font-weight: 600;
+    font-size: 0.875rem;
 }
 
-.detail-card .card-body {
-    padding: 1.5rem;
-}
-
-/* Table for Main Details */
-.table-detail {
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 0;
-}
-
-.table-detail th,
-.table-detail td {
-    padding: 0.85rem 1.1rem;
-    vertical-align: middle;
-}
-
-.table-detail th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-    color: #495057;
-    border-right: 1px solid #e9ecef;
-}
-
-/* Condition Badges */
-.condition-badge {
+.source-badge {
     display: inline-block;
-    padding: 0.4em 0.75em;
-    font-size: 0.8em;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--color-secondary-bg);
+    color: var(--color-secondary);
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.total-value {
     font-weight: 600;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25rem;
-    text-transform: capitalize;
+    font-size: 1.1rem;
+    color: var(--color-success);
 }
 
-.badge-baik {
-    background-color: rgba(40, 167, 69, 0.1);
-    color: #28a745;
+.date-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--color-slate-100);
+    color: var(--color-slate-700);
+    border-radius: var(--border-radius);
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
-.badge-rusak-ringan {
-    background-color: rgba(255, 193, 7, 0.1);
-    color: #ffc107;
-}
-
-.badge-rusak-berat {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: #dc3545;
-}
-
-/* Inventaris Photo */
+/* --- INVENTARIS PHOTO --- */
 .inventaris-photo {
-    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    background-color: var(--color-slate-100);
 }
 
 .inventaris-photo img {
-    max-width: 100%;
-    max-height: 350px;
+    width: 100%;
+    height: auto;
+    min-height: 200px;
     object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-    padding: 4px;
+    transition: transform var(--transition-fast);
 }
 
-/* Card for Special Asset Details */
-.detail-aset-card {
-    border: 1px solid #17a2b8;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.inventaris-photo:hover img {
+    transform: scale(1.02);
 }
 
-.detail-aset-card .card-header {
-    color: white;
-    border-radius: 7px 7px 0 0 !important;
-    /* Override bootstrap */
+/* --- STATS GRID --- */
+.stats-grid {
+    display: grid;
+    gap: 1rem;
 }
 
-.detail-aset-card .card-header h6 {
-    color: white;
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem;
+    background-color: var(--color-slate-50);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-slate-200);
+    transition: all var(--transition-fast);
 }
 
-.detail-aset-card .table th {
-    font-weight: 500;
-    color: #333;
-    border-top: none;
-    border-bottom: 1px solid #f0f0f0;
+.stat-item:hover {
+    background-color: var(--color-slate-100);
+    border-color: var(--color-slate-300);
 }
 
-.detail-aset-card .table td {
-    border-top: none;
-    border-bottom: 1px solid #f0f0f0;
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius);
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
 }
 
-.detail-aset-card .table tr:last-child th,
-.detail-aset-card .table tr:last-child td {
-    border-bottom: none;
+.stat-content {
+    flex: 1;
 }
 
-
-/* History Cards (Mutasi & Penghapusan) */
-.history-card {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--color-slate-500);
+    margin-bottom: 0.125rem;
 }
 
-.history-card>.card-header {
-    border-radius: 7px 7px 0 0 !important;
-    /* Override bootstrap */
-    border-bottom: none;
-    color: white;
-}
-
-.history-card>.card-header h6 {
-    color: white;
-}
-
-.history-card .card-body {
-    padding: 0;
-}
-
-.history-card .table {
-    margin-bottom: 0;
-}
-
-.history-card .table thead th {
-    background-color: #f8f9fa;
-    color: #495057;
+.stat-value {
     font-weight: 600;
-    padding: 0.9rem 1.1rem;
-    border-bottom: 1px solid #eaeaea;
+    color: var(--color-slate-800);
+    font-size: 0.95rem;
 }
 
-.history-card .table tbody td {
-    padding: 0.9rem 1.1rem;
+/* --- TABLE ENHANCEMENTS --- */
+.table thead th {
+    background-color: var(--color-slate-50);
+    color: var(--color-slate-500);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-slate-200);
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 0.875rem 1rem;
     vertical-align: middle;
-    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.875rem;
+    border-top: 1px solid var(--color-slate-200);
 }
 
-.history-card .table tbody tr:last-child td {
-    border-bottom: none;
+.table tbody tr:hover {
+    background-color: var(--color-primary-light);
 }
 
-.history-card .table tbody tr:hover {
-    background-color: #f8f9fa;
+.user-info {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--color-slate-600);
 }
 
-.history-card .text-center {
-    padding: 2rem 1rem;
-    color: #6c757d;
+/* --- MODERN MODAL --- */
+.modern-modal .btn-close:focus {
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* --- ACCESSIBILITY ENHANCEMENTS --- */
+.detail-row:focus-within {
+    background-color: var(--color-primary-light);
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}
+
+/* Memastikan kontras yang baik untuk semua badge */
+.status-badge,
+.category-badge,
+.source-badge,
+.date-badge,
+.quantity-badge {
+    position: relative;
+}
+
+.status-badge::before,
+.category-badge::before,
+.source-badge::before,
+.date-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.status-badge:hover::before,
+.category-badge:hover::before,
+.source-badge:hover::before,
+.date-badge:hover::before {
+    background-color: rgba(0, 0, 0, 0.05);
+    opacity: 1;
+}
+
+/* --- MODERN MODAL --- */
+.modern-modal {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+}
+
+.modern-modal .modal-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--color-slate-200);
+    padding: 1.5rem;
+}
+
+.modern-modal .modal-title {
+    font-weight: 600;
+    color: var(--color-slate-800);
+    font-size: 1.125rem;
+}
+
+.modern-modal .modal-body {
+    padding: 1.5rem;
+}
+
+.modern-modal .modal-footer {
+    background-color: var(--color-slate-50);
+    border-top: 1px solid var(--color-slate-200);
+    padding: 1rem 1.5rem;
+}
+
+.warning-box {
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning);
+    padding: 0.875rem 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-warning-bg);
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+/* --- BUTTON VARIANTS --- */
+.btn-warning.btn-pill {
+    background-color: var(--color-warning);
+    border-color: var(--color-warning);
+    color: white;
+}
+
+.btn-warning.btn-pill:hover {
+    background-color: #d97706;
+    border-color: #d97706;
+    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.2);
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 992px) {
+    .detail-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .detail-label {
+        width: 100%;
+        padding-right: 0;
+        font-size: 0.875rem;
+        color: var(--color-slate-500);
+    }
+
+    .detail-value {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .page-header-content,
+    .page-header-actions {
+        width: 100%;
+    }
+
+    .page-header-actions {
+        justify-content: flex-start;
+        margin-top: 0.75rem;
+    }
+
+    .page-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .inventaris-photo img {
+        min-height: 160px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-dialog {
+        margin: 1rem;
+    }
+
+    .modern-modal .modal-header,
+    .modern-modal .modal-body,
+    .modern-modal .modal-footer {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .category-badge,
+    .source-badge,
+    .date-badge {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+    }
+
+    .quantity-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+
+    .stat-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+    }
+
+    .stat-value {
+        font-size: 0.9rem;
+    }
+}
+
+/* --- LOADING STATES --- */
+.detail-row.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.detail-row.loading::after {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-slate-200);
+    border-top: 2px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- PRINT STYLES --- */
+@media print {
+
+    .page-header-actions,
+    .btn,
+    .modal {
+        display: none !important;
+    }
+
+    .modern-card {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        margin-bottom: 1rem;
+    }
+
+    .detail-row:hover {
+        background-color: transparent !important;
+    }
+
+    .inventaris-photo img {
+        max-height: 200px;
+    }
+}
+
+/* --- DARK MODE PREPARATION --- */
+@media (prefers-color-scheme: dark) {
+    /* Bisa ditambahkan nanti jika diperlukan */
+}
+
+/* --- HIGH CONTRAST MODE --- */
+@media (prefers-contrast: high) {
+    .detail-row {
+        border-bottom: 2px solid var(--color-slate-400);
+    }
+
+    .category-badge,
+    .source-badge,
+    .date-badge {
+        border: 1px solid currentColor;
+    }
+}
+
+/* --- FOCUS INDICATORS --- */
+.btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.modal:focus-visible {
+    outline: none;
+}
+
+.modern-modal .form-control:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }

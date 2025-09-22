@@ -19,13 +19,19 @@ class PenghapusanInventarisController extends Controller
 
     public function index(Request $request)
     {
+        // 1. Mulai query dasar
         $query = PenghapusanInventaris::with('user')->orderBy('tanggal_penghapusan', 'desc');
-        // $query = PenghapusanInventaris::with(['inventaris', 'user'])
-        //     ->orderBy('tanggal_penghapusan', 'desc');
 
-        if ($request->filled('inventaris_id')) {
-            $query->where('inventaris_id', $request->input('inventaris_id'));
-        }
+        // 2. Terapkan PENCARIAN jika ada input 'search'
+        $query->when($request->input('search'), function ($q, $search) {
+            return $q->where(function ($subQuery) use ($search) {
+                $subQuery->where('nama_barang', 'like', "%{$search}%")
+                    ->orWhere('kode_inventaris', 'like', "%{$search}%")
+                    ->orWhere('nomor_berita_acara', 'like', "%{$search}%");
+            });
+        });
+
+        // 3. Terapkan filter lain jika ada (opsional, sudah ada)
         if ($request->filled('tanggal_dari') && $request->filled('tanggal_sampai')) {
             $query->whereBetween('tanggal_penghapusan', [
                 $request->input('tanggal_dari'),
@@ -33,11 +39,12 @@ class PenghapusanInventarisController extends Controller
             ]);
         }
 
-        $penghapusan = $query->paginate(10);
-        $inventarisList = Inventaris::query()->orderBy('nama_barang')->get();
+        // 4. Lakukan paginasi setelah semua filter diterapkan
+        $penghapusan = $query->paginate(10)->withQueryString();
 
-        return view('penghapusan.index', compact('penghapusan', 'inventarisList'));
+        return view('penghapusan.index', compact('penghapusan'));
     }
+
 
     public function create(Request $request)
     {
@@ -169,5 +176,33 @@ class PenghapusanInventarisController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    public function destroy(PenghapusanInventaris $penghapusan)
+    {
+        try {
+            // 1. Hapus file PDF dari storage
+            if ($penghapusan->file_berita_acara) {
+                Storage::disk('public')->delete($penghapusan->file_berita_acara);
+            }
+
+            // 2. Simpan nama barang untuk pesan log sebelum dihapus
+            $namaBarang = $penghapusan->nama_barang;
+
+            // 3. Hapus data dari database
+            $penghapusan->delete();
+
+            // 4. Catat Log Aktivitas
+            LogAktivitas::create([
+                'user_id' => Auth::id(),
+                'tipe_aksi' => 'hapus permanen',
+                'deskripsi' => "Menghapus permanen riwayat penghapusan untuk barang '{$namaBarang}'"
+            ]);
+
+            return redirect()->route('penghapusan.index')->with('success', 'Riwayat penghapusan berhasil dihapus permanen.');
+
+        } catch (\Exception $e) {
+            return redirect()->route('penghapusan.index')->with('error', 'Gagal menghapus riwayat: ' . $e->getMessage());
+        }
     }
 }

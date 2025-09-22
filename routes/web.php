@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
     // Penghapusan inventaris routes
     Route::resource('penghapusan-inventaris', PenghapusanInventarisController::class)->except(['edit', 'update', 'destroy']);
     Route::resource('penghapusan', PenghapusanInventarisController::class)->only(['index', 'create', 'store', 'show']);
+    Route::delete('/penghapusan/{penghapusan}', [PenghapusanInventarisController::class, 'destroy'])->name('penghapusan.destroy');
     // Log aktivitas routes
     Route::get('/log-aktivitas', [LogAktivitasController::class, 'index'])->name('log-aktivitas.index');
 

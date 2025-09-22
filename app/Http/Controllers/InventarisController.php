@@ -352,15 +352,25 @@ class InventarisController extends Controller
         }
     }
 
-    public function trashed()
+    public function trashed(Request $request)
     {
-        $inventaris = Inventaris::onlyTrashed() // Mengambil HANYA data yang sudah di-soft delete
-            ->with(['kategori'])
-            ->latest('deleted_at')
+        // 1. Mulai query dengan mengambil data yang di-soft delete
+        $query = Inventaris::onlyTrashed()->with(['kategori']);
+
+        // 2. Terapkan PENCARIAN jika ada input 'search'
+        $query->when($request->input('search'), function ($q, $search) {
+            return $q->where(function ($subQuery) use ($search) {
+                $subQuery->where('nama_barang', 'like', "%{$search}%")
+                    ->orWhere('kode_inventaris', 'like', "%{$search}%");
+            });
+        });
+
+        // 3. Urutkan dan LAKUKAN PAGINASI setelah semua filter diterapkan
+        $inventaris = $query->latest('deleted_at')
             ->paginate(10)
             ->withQueryString();
 
-        $activeCount = Inventaris::count(); // Hitung inventaris yang masih aktif
+        $activeCount = Inventaris::count();
 
         return view('inventaris.trashed', compact('inventaris', 'activeCount'));
     }
@@ -384,82 +394,6 @@ class InventarisController extends Controller
         }
     }
 
-
-    /* // public function forceDelete(Request $request, $id)
-    // {
-    //     // Cari inventaris yang sudah di-soft delete
-    //     $inventaris = Inventaris::onlyTrashed()->findOrFail($id);
-
-    //     $validated = $request->validate([
-    //         'nomor_berita_acara' => 'required|string|max:100|unique:penghapusan_inventaris,nomor_berita_acara',
-    //         'alasan_penghapusan' => 'required|string|max:500',
-    //         'file_berita_acara' => 'required|file|mimes:pdf|max:2048'
-    //     ]);
-
-    //     $filePath = null;
-
-    //     try {
-    //         DB::beginTransaction();
-
-    //         // 1. Simpan file berita acara
-    //         $filePath = $request->file('file_berita_acara')->store('berita_acara', 'public');
-
-    //         // 2. Catat riwayat penghapusan (DISIMPAN SEBELUM data dihapus)
-    //         PenghapusanInventaris::create([
-    //             'inventaris_id' => $inventaris->id,
-    //             'tanggal_penghapusan' => now(),
-    //             'alasan_penghapusan' => $validated['alasan_penghapusan'],
-    //             'nomor_berita_acara' => $validated['nomor_berita_acara'],
-    //             'file_berita_acara' => $filePath,
-    //             'dihapus_oleh' => Auth::id()
-    //         ]);
-
-    //         // 3. Hapus SEMUA relasi anak yang masih terkait
-    //         // Hapus data mutasi
-    //         $inventaris->mutasiInventaris()->delete();
-
-    //         // Hapus data detail aset
-    //         $inventaris->asetPeralatanKantor()->delete();
-    //         $inventaris->asetPeralatanKomunikasi()->delete();
-    //         $inventaris->asetBangunan()->delete();
-    //         $inventaris->asetKendaraan()->delete();
-    //         $inventaris->asetKesehatanPosyandu()->delete();
-    //         $inventaris->asetTanah()->delete();
-    //         $inventaris->asetInfrastruktur()->delete();
-    //         $inventaris->asetPertanian()->delete();
-    //         $inventaris->asetLainnya()->delete();
-
-    //         // Simpan informasi untuk log
-    //         $namaBarangLog = $inventaris->nama_barang;
-    //         $kodeInventarisLog = $inventaris->kode_inventaris;
-
-    //         // 4. Hapus data dari tabel inventaris secara permanen
-    //         $inventaris->forceDelete();
-
-    //         // 5. Buat log aktivitas
-    //         LogAktivitas::createLog(
-    //             Auth::id(),
-    //             'hapus',
-    //             "Menghapus permanen inventaris: {$namaBarangLog} (Kode: {$kodeInventarisLog})"
-    //         );
-
-    //         DB::commit();
-
-    //         return redirect()->route('inventaris.trashed')
-    //             ->with('success', 'Inventaris berhasil dihapus secara permanen.');
-
-    //     } catch (Exception $e) {
-    //         DB::rollBack();
-
-    //         if ($filePath && Storage::disk('public')->exists($filePath)) {
-    //             Storage::disk('public')->delete($filePath);
-    //         }
-
-    //         return redirect()->back()
-    //             ->with('error', 'Gagal menghapus inventaris: ' . $e->getMessage())->withInput();
-    //     }
-    // }
-    */
 
     public function getKategoriDetail($id)
     {
