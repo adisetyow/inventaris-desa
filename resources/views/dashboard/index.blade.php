@@ -6,9 +6,6 @@
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="{{ route('laporan.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class="fas fa-download fa-sm text-white-50"></i> Generate Laporan
-            </a>
         </div>
 
         <!-- Statistik Utama -->
@@ -121,28 +118,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Kondisi Inventaris -->
-            <div class="col-xl-4 col-lg-5">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Kondisi Inventaris</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-pie pt-4 pb-2">
-                            <canvas id="kondisiChart"></canvas>
-                        </div>
-                        <div class="mt-4 text-center small">
-                            @foreach($kondisiStats as $kondisi => $total)
-                                <span class="mr-2">
-                                    <i class="fas fa-circle kondisi-{{ strtolower($kondisi) }}"></i>
-                                    {{ $kondisi }} ({{ $total }})
-                                </span>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Tabel dan Data Pendukung -->
@@ -191,104 +166,10 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Mutasi Terbaru -->
-            <div class="col-lg-6 mb-4">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Mutasi Terbaru</h6>
-                        <a href="{{ route('mutasi-inventaris.index') }}" class="btn btn-sm btn-outline-primary">
-                            Lihat Semua <i class="fas fa-arrow-right ms-1"></i>
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="dataTableMutasi" width="100%"
-                                cellspacing="0">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>Tanggal</th>
-                                        <th>Inventaris</th>
-                                        <th>Lokasi Baru</th>
-                                        <th>Petugas</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($mutasiTerbaru as $mutasi)
-                                        <tr>
-                                            <td>{{ $mutasi->tanggal_mutasi->format('d/m/Y') }}</td>
-                                            <td>
-                                                <a href="{{ route('inventaris.show', $mutasi->inventaris_id) }}"
-                                                    class="text-primary">
-                                                    {{ $mutasi->inventaris->nama_barang }}
-                                                </a>
-                                            </td>
-                                            <td>{{ $mutasi->lokasi_baru }}</td>
-                                            <td>{{ $mutasi->user->nama }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4" class="text-center">Tidak ada data mutasi terbaru</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Baris Ketiga -->
         <div class="row">
-            <!-- Inventaris Perlu Perhatian -->
-            <div class="col-lg-6 mb-4">
-                <div class="card shadow mb-4 border-left-danger">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between bg-danger">
-                        <h6 class="m-0 font-weight-bold text-white">
-                            <i class="fas fa-exclamation-triangle me-1"></i> Inventaris Perlu Perhatian
-                        </h6>
-                        <span class="badge bg-white text-danger">{{ count($inventarisPerluPerhatian) }}</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="dataTablePerhatian" width="100%"
-                                cellspacing="0">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>Kode</th>
-                                        <th>Nama Barang</th>
-                                        <th>Kategori</th>
-                                        <th>Kondisi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($inventarisPerluPerhatian as $item)
-                                        <tr class="row-{{ strtolower($item->kondisi) }}">
-                                            <td>
-                                                <a href="{{ route('inventaris.show', $item->id) }}" class="text-primary">
-                                                    {{ $item->kode_inventaris }}
-                                                </a>
-                                            </td>
-                                            <td>{{ $item->nama_barang }}</td>
-                                            <td>{{ $item->kategori->nama_kategori }}</td>
-                                            <td>
-                                                <span class="badge bg-{{ strtolower($item->kondisi) }}">
-                                                    {{ $item->kondisi }}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4" class="text-center">Tidak ada inventaris yang perlu perhatian</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Log Aktivitas -->
             <div class="col-lg-6 mb-4">

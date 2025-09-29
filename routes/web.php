@@ -7,6 +7,7 @@ use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\KategoriInventarisController;
 use App\Http\Controllers\MutasiInventarisController;
 use App\Http\Controllers\PenghapusanInventarisController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogAktivitasController;
 use App\Http\Controllers\DetailAsetController;
 
@@ -76,11 +77,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/log-aktivitas', [LogAktivitasController::class, 'index'])->name('log-aktivitas.index');
 
     // Laporan routes
-    Route::prefix('laporan')->group(function () {
-        Route::get('/', [InventarisController::class, 'laporanIndex'])->name('laporan.index');
-        Route::get('/inventaris', [InventarisController::class, 'report'])->name('laporan.inventaris');
-        Route::get('/mutasi', [MutasiInventarisController::class, 'index'])->name('laporan.mutasi');
-        Route::get('/penghapusan', [PenghapusanInventarisController::class, 'index'])->name('laporan.penghapusan');
+    Route::prefix('laporan')->name('laporan.')->group(function () {
+        Route::get('/', [LaporanController::class, 'index'])->name('index');
+        Route::get('/export/excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
+        Route::get('/export/pdf', [LaporanController::class, 'exportPdf'])->name('export.pdf');
     });
 
     // Export routes

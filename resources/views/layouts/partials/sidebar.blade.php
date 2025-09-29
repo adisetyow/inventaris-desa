@@ -421,11 +421,11 @@
         </a>
 
         {{-- Mutasi --}}
-        <a class="nav-link {{ request()->routeIs('mutasi-inventaris.index') ? 'active' : '' }}"
+        <!-- <a class="nav-link {{ request()->routeIs('mutasi-inventaris.index') ? 'active' : '' }}"
             href="{{ route('mutasi-inventaris.index') }}" data-tooltip="Mutasi">
             <i class="fas fa-fw fa-exchange-alt"></i>
             <span class="nav-text">Mutasi</span>
-        </a>
+        </a> -->
 
         {{-- Laporan --}}
         <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active' : '' }}"

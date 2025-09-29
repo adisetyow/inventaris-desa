@@ -23,7 +23,7 @@
                                 <i class="fas fa-search"></i>
                             </span>
                             <input type="text" name="search" id="searchInput" class="form-control"
-                                value="{{ request('search') }}" placeholder="Cari otomatis...">
+                                value="{{ request('search') }}" placeholder="Cari...">
 
                             {{-- Tombol X untuk reset --}}
                             @if(request('search'))
