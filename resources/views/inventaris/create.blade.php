@@ -194,21 +194,62 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6">
-                            <label for="kode_inventaris" class="form-label">Kode Inventaris <span class="text-danger">*</span></label>
+                        <!-- <div class="col-md-6">
+                            <label for="kode_inventaris" class="form-label">
+                                Kode Inventaris <span class="text-danger">*</span>
+                            </label>
                             <div class="input-group">
-                                <input type="text" class="form-control @error('kode_inventaris') is-invalid @enderror"
-                                    id="kode_inventaris" name="kode_inventaris" value="{{ old('kode_inventaris') }}"
-                                    placeholder="Klik generate untuk membuat kode" required readonly>
-                                <button class="btn btn-outline-primary" type="button" id="generateKode">
-                                    <i class="fas fa-sync-alt me-1"></i> Generate
-                                </button>
+                                <input type="text"
+                                    class="form-control @error('kode_inventaris') is-invalid @enderror"
+                                    id="kode_inventaris"
+                                    name="kode_inventaris"
+                                    value="{{ old('kode_inventaris', $kode_inventaris) }}"
+                                    readonly
+                                    required>
                                 @error('kode_inventaris')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <small class="form-text text-muted">Pilih jenis inventaris terlebih dahulu lalu klik Generate</small>
-                        </div>
+                            <small class="form-text text-muted">
+                                Kode inventaris dibuat otomatis berdasarkan kategori yang dipilih.
+                            </small>
+                        </div> -->
+                        <div class="col-md-6">
+    <label for="kode_inventaris" class="form-label">
+        Kode Inventaris <span class="text-danger">*</span>
+    </label>
+
+    <div class="input-group">
+        <!-- Optional: jika mau tampilkan kode sebagai badge tebal + gembok -->
+        <!--
+        <span class="input-group-text locked" id="basic-addon1">
+            <i class="fas fa-lock" aria-hidden="true"></i>
+        </span>
+        -->
+
+        <input type="text"
+               class="form-control locked-input @error('kode_inventaris') is-invalid @enderror"
+               id="kode_inventaris"
+               name="kode_inventaris"
+               value="{{ old('kode_inventaris', $kode_inventaris) }}"
+               readonly
+               aria-readonly="true"
+               title="Kode ini dibuat otomatis dan tidak dapat diubah"
+               required>
+
+        <span class="input-group-text locked" id="kodeLock" title="Terkunci (otomatis)">
+            <i class="fas fa-lock" aria-hidden="true"></i>
+        </span>
+
+        @error('kode_inventaris')
+            <div class="invalid-feedback d-block">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <small class="form-text text-muted">
+        Kode inventaris dibuat otomatis berdasarkan kategori yang dipilih.
+    </small>
+</div>
 
                         <div class="col-md-3">
                             <label for="jumlah" class="form-label">Jumlah <span class="text-danger">*</span></label>
@@ -606,14 +647,44 @@
 
             // Auto generate kode saat kategori dipilih
             $('input[name="kategori_id"]').change(function () {
-                const kategoriId = $(this).val();
+    const kategoriId = $(this).val();
+    if (kategoriId) {
+        // Panggil fungsi untuk mengambil kode baru
+        fetchAndSetKodeInventaris(kategoriId); 
+        
+        // Panggil fungsi untuk memuat detail spesifik
+        loadKategoriDetail(kategoriId);
+    }
+});
 
-                // Reset kode inventaris
-                $('#kode_inventaris').val('');
+// ➕ TAMBAHKAN FUNGSI BARU INI
+function fetchAndSetKodeInventaris(kategoriId) {
+    // Tampilkan loading di input field
+    $('#kode_inventaris').val('Membuat kode...');
 
-                // Load detail spesifik untuk kategori yang dipilih
-                loadKategoriDetail(kategoriId);
+    $.ajax({
+        url: '{{ route("inventaris.generate-kode.ajax") }}', // Panggil route baru
+        type: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            kategori_id: kategoriId
+        },
+        success: function (response) {
+            // Set nilai input dengan kode dari server
+            $('#kode_inventaris').val(response.kode);
+        },
+        error: function (xhr) {
+            // Tampilkan pesan error jika gagal
+            $('#kode_inventaris').val('Gagal memuat kode');
+            console.error('Gagal generate kode:', xhr.responseJSON.error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Tidak dapat membuat kode inventaris.'
             });
+        }
+    });
+}
 
             // Generate kode inventaris
             $('#generateKode').click(function () {

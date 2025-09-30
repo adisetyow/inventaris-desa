@@ -53,11 +53,14 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="remember">
-                            Ingat Saya
-                        </label>
+                    <!-- <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="remember">
+                                Ingat Saya
+                            </label>
+                        </div> -->
+                    <div class="text-center mt-4">
+                        <p>Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
                     </div>
 
                     @if (Route::has('password.request'))

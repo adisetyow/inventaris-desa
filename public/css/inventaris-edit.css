@@ -510,6 +510,43 @@
 }
 
 /* --- FORM ENHANCEMENTS --- */
+/* --- FORM ENHANCEMENTS --- */
+.locked-input {
+    background-color: #f1f3f5;
+    /* warna latar seperti disabled */
+    border: 1px solid #dcdcdc;
+    /* sedikit kontras */
+    font-weight: 700;
+    /* bold */
+    letter-spacing: 0.4px;
+    color: #212529;
+}
+
+/* Buat teks di input tetap bold pada beberapa browser */
+.locked-input::placeholder {
+    font-weight: 700;
+    color: #6c757d;
+}
+
+/* Styling untuk ikon lock di sebelah input */
+.input-group-text.locked {
+    background-color: #e9ecef;
+    border-left: 0;
+    border-right: 1px solid #dcdcdc;
+}
+
+/* Jika Anda ingin efek overlay gembok */
+.locked-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .35rem .5rem;
+    border-radius: .375rem;
+    background: rgba(0, 0, 0, 0.03);
+    font-weight: 700;
+    color: #212529;
+}
+
 .form-control:focus,
 .form-select:focus {
     border-color: var(--color-primary);

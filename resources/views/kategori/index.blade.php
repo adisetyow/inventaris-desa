@@ -55,7 +55,9 @@
                                 <th>Nama Kategori</th>
                                 <th>Deskripsi</th>
                                 <th class="text-center" style="width: 15%;">Jumlah Inventaris</th>
+                                @role('Administrator')
                                 <th class="text-center" style="width: 15%;">Aksi</th>
+                                @endrole
                             </tr>
                         </thead>
                         <tbody>
@@ -81,11 +83,13 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="action-buttons">
+                                            @role('Administrator')
                                             <button type="button" class="btn btn-sm btn-outline-primary btn-pill"
                                                 data-bs-toggle="modal" data-bs-target="#editKategoriModal{{ $kategori->id }}"
                                                 title="Edit Deskripsi">
                                                 <i class="fas fa-edit me-1"></i>Edit
                                             </button>
+                                            @endrole
                                         </div>
                                     </td>
                                 </tr>

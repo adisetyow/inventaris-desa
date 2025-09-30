@@ -29,6 +29,7 @@
                     </div>
                 </div>
                 <div class="page-header-actions">
+                    @role('Administrator')
                     <a href="{{ route('inventaris.edit', $inventaris->id) }}" class="btn btn-primary btn-pill">
                         <i class="fas fa-edit me-1"></i>Edit
                     </a>
@@ -37,6 +38,7 @@
                         data-nama="{{ $inventaris->nama_barang }}">
                         <i class="fas fa-archive me-1"></i>Arsipkan
                     </button>
+                    @endrole
                     <a href="{{ route('inventaris.index') }}" class="btn btn-outline-secondary btn-pill">
                         <i class="fas fa-arrow-left me-1"></i>Kembali
                     </a>

@@ -11,12 +11,14 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+        $this->call(RoleSeeder::class);
         // Create admin user
-        User::create([
+        $user = User::create([
             'nama' => 'Admin Desa',
             'email' => 'admin@desa.com',
             'password' => Hash::make('admin123')
         ]);
+        $user->assignRole('Administrator');
 
         // Create kategori inventaris
         $kategoris = [

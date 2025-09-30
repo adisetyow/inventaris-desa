@@ -46,7 +46,9 @@
                                 <th>Nama Barang & Kode</th>
                                 <th>Kategori</th>
                                 <th class="text-center">Tanggal Diarsipkan</th>
+                                @role('Administrator')
                                 <th class="text-center">Aksi</th>
+                                @endrole
                             </tr>
                         </thead>
                         <tbody>
@@ -70,6 +72,7 @@
                                     <td class="text-center">
                                         <div class="action-buttons-arsip justify-content-center">
                                             {{-- Tombol Kembalikan (Restore) dengan gaya baru --}}
+                                            @role('Administrator')
                                             <button type="button" class="btn btn-action btn-action-restore"
                                                 data-bs-toggle="modal" data-bs-target="#restoreModal" data-id="{{ $item->id }}"
                                                 data-nama="{{ $item->nama_barang }}">
@@ -81,6 +84,7 @@
                                                 class="btn btn-action btn-action-delete">
                                                 <i class="fas fa-file-signature"></i> Proses Hapus
                                             </a>
+                                            @endrole
                                         </div>
                                     </td>
                                 </tr>

@@ -50,9 +50,11 @@
                         </button>
 
                         {{-- Tombol Tambah --}}
+                        @role('Administrator')
                         <a href="{{ route('inventaris.create') }}" class="btn btn-primary btn-pill">
                             <i class="fas fa-plus me-1"></i>Tambah
                         </a>
+                        @endrole
                     </div>
                 </div>
 
@@ -139,10 +141,12 @@
                                                 <i class="fas fa-eye"></i>
                                             </a>
 
+                                            @role('Administrator')
                                             <a href="{{ route('inventaris.edit', $item->id) }}" class="btn btn-icon action-edit"
                                                 data-bs-toggle="tooltip" title="Edit">
                                                 <i class="fas fa-pen"></i>
                                             </a>
+                                            @endrole
                                         </div>
                                     </td>
                                 </tr>

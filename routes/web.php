@@ -11,14 +11,23 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogAktivitasController;
 use App\Http\Controllers\DetailAsetController;
 
-// Guest routes
-Route::middleware('guest')->group(function () {
-    Route::get('/', [AuthController::class, 'showLoginForm'])->name('login.form');
-    Route::post('/', [AuthController::class, 'login'])->name('login');
+
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+// routes/web.php
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 // Protected routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // Dashboard
@@ -37,6 +46,8 @@ Route::middleware('auth')->group(function () {
 
         // Additional Routes
         Route::post('/generate-kode', [InventarisController::class, 'generateKode'])->name('generate-kode');
+        // GANTI DENGAN INI
+        Route::post('/generate-kode-ajax', [InventarisController::class, 'generateKodeAjax'])->name('generate-kode.ajax');
 
         // Trash/Archive Management
         Route::get('/arsip/data', [InventarisController::class, 'trashed'])->name('trashed');
@@ -89,3 +100,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/penghapusan', [PenghapusanInventarisController::class, 'exportPenghapusan'])->name('export.penghapusan');
     });
 });
+
+// Route::middleware(['auth', 'role:Administrator|Viewer'])->group(function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+//     // Hanya method untuk melihat daftar dan detail
+//     Route::get('/inventaris', [InventarisController::class, 'index'])->name('inventaris.index');
+//     Route::get('/inventaris/{inventaris}', [InventarisController::class, 'show'])->name('inventaris.show');
+
+//     // Hanya method untuk melihat halaman laporan
+//     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+//     Route::post('/laporan/generate', [LaporanController::class, 'generate'])->name('laporan.generate');
+// });

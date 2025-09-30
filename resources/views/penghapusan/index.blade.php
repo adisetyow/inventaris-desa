@@ -45,7 +45,9 @@
                             <th class="text-center">Tgl. Hapus</th>
                             <th>Alasan</th>
                             <th>Dihapus Oleh</th>
+                            @role('Administrator')
                             <th class="text-center">Aksi</th>
+                            @endrole
                         </tr>
                     </thead>
                     <tbody>
@@ -74,6 +76,7 @@
                                 </td>
                                 <td>{{ Str::limit($item->alasan_penghapusan, 50) }}</td>
                                 <td>{{ $item->user->nama ?? 'N/A' }}</td>
+                                @role('Administrator')
                                 <td class="text-center">
                                     {{-- Tombol untuk menghapus riwayat secara permanen --}}
                                     <button type="button" class="btn btn-icon action-edit" data-bs-toggle="modal"
@@ -82,6 +85,7 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
+                                @endrole
                             </tr>
                         @empty
                             <tr>

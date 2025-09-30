@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Inventaris;
 use App\Models\KategoriInventaris;
-use App\Models\PenghapusanInventaris;
+use App\Services\KodeInventarisService;
 use App\Models\LogAktivitas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,11 +20,13 @@ class InventarisController extends Controller
 {
     protected $asetHandlerService;
     protected $reportService;
+    protected $kodeInventarisService;
 
-    public function __construct(AsetHandlerService $asetHandlerService, ReportService $reportService)
+    public function __construct(AsetHandlerService $asetHandlerService, ReportService $reportService, KodeInventarisService $kodeInventarisService)
     {
         $this->asetHandlerService = $asetHandlerService;
         $this->reportService = $reportService;
+        $this->kodeInventarisService = $kodeInventarisService;
     }
 
     public function index()
@@ -41,101 +43,83 @@ class InventarisController extends Controller
         return view('inventaris.index', compact('inventaris', 'kategoris', 'deletedCount'));
     }
 
-    public function generateKode(Request $request)
-    {
-        $request->validate([
-            'kategori_id' => 'required|exists:kategori_inventaris,id'
-        ]);
-
-        $kategori = KategoriInventaris::find($request->input('kategori_id'));
-
-        if (!$kategori) {
-            return response()->json(['error' => 'Kategori tidak ditemukan.'], 404);
-        }
-
-        // 1. Ambil kode awalan desa dari file config
-        $kodeDesa = config('app.kode_desa');
-
-        // 2. Ambil ID kategori dan format menjadi 2 digit (misal: 1 -> "01")
-        $kodeKategori = str_pad($kategori->id, 2, '0', STR_PAD_LEFT);
-
-        // 3. Buat prefix untuk query pencarian nomor terakhir
-        // Contoh: "33.22.02.003.02."
-        $prefix = $kodeDesa . '.' . $kodeKategori . '.';
-
-        // 4. Cari inventaris terakhir dengan prefix yang sama
-        $lastItem = Inventaris::where('kode_inventaris', 'like', $prefix . '%')
-            ->orderBy('kode_inventaris', 'desc')
-            ->first();
-
-        $nextNumber = 1;
-        if ($lastItem) {
-            // Ekstrak nomor urut terakhir dari kode inventaris
-            $lastNumberStr = substr($lastItem->kode_inventaris, strlen($prefix));
-            $lastNumber = (int) $lastNumberStr;
-            $nextNumber = $lastNumber + 1;
-        }
-
-        // 5. Gabungkan semua bagian menjadi kode final (nomor urut dibuat 3 digit)
-        // Contoh: "33.22.02.003.02." + "001" -> "33.22.02.003.02.001"
-        $finalCode = $prefix . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
-
-        return response()->json([
-            'kode' => $finalCode
-        ]);
-    }
-
-
     // public function generateKode(Request $request)
     // {
     //     $request->validate([
     //         'kategori_id' => 'required|exists:kategori_inventaris,id'
     //     ]);
 
-    //     // Perbaikan: Gunakan first() dan pastikan kategori ada
-    //     $kategori = KategoriInventaris::where('id', $request->input('kategori_id'))->first();
+    //     $kategori = KategoriInventaris::find($request->input('kategori_id'));
 
     //     if (!$kategori) {
-    //         return response()->json(['error' => 'Kategori tidak ditemukan'], 404);
+    //         return response()->json(['error' => 'Kategori tidak ditemukan.'], 404);
     //     }
 
-    //     // Perbaikan: Gunakan getAttribute untuk mengakses nama_kategori
-    //     $prefix = strtoupper(substr(str_replace(' ', '', $kategori->getAttribute('nama_kategori')), 0, 3));
+    //     // 1. Ambil kode awalan desa dari file config
+    //     $kodeDesa = config('app.kode_desa');
 
+    //     // 2. Ambil ID kategori dan format menjadi 2 digit (misal: 1 -> "01")
+    //     $kodeKategori = str_pad($kategori->id, 2, '0', STR_PAD_LEFT);
+
+    //     // 3. Buat prefix untuk query pencarian nomor terakhir
+    //     // Contoh: "33.22.02.003.02."
+    //     $prefix = $kodeDesa . '.' . $kodeKategori . '.';
+
+    //     // 4. Cari inventaris terakhir dengan prefix yang sama
     //     $lastItem = Inventaris::where('kode_inventaris', 'like', $prefix . '%')
     //         ->orderBy('kode_inventaris', 'desc')
     //         ->first();
 
     //     $nextNumber = 1;
     //     if ($lastItem) {
-    //         $lastNumber = (int) substr($lastItem->kode_inventaris, strlen($prefix));
+    //         // Ekstrak nomor urut terakhir dari kode inventaris
+    //         $lastNumberStr = substr($lastItem->kode_inventaris, strlen($prefix));
+    //         $lastNumber = (int) $lastNumberStr;
     //         $nextNumber = $lastNumber + 1;
     //     }
 
+    //     // 5. Gabungkan semua bagian menjadi kode final (nomor urut dibuat 3 digit)
+    //     // Contoh: "33.22.02.003.02." + "001" -> "33.22.02.003.02.001"
+    //     $finalCode = $prefix . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+
     //     return response()->json([
-    //         'kode' => $prefix . str_pad($nextNumber, 5, '0', STR_PAD_LEFT)
+    //         'kode' => $finalCode
     //     ]);
     // }
+
 
     public function create()
     {
         $kategori = KategoriInventaris::all();
-        return view('inventaris.create', compact('kategori'));
+        $selectedKategoriId = request()->old('kategori_id', $kategori->first()->id ?? null);
+
+        $kode_inventaris = '';
+        if ($selectedKategoriId) {
+            $kode_inventaris = $this->kodeInventarisService->generateKode($selectedKategoriId);
+        }
+
+        return view('inventaris.create', compact('kategori', 'kode_inventaris', 'selectedKategoriId'));
     }
 
     public function store(Request $request)
     {
         $kategori = KategoriInventaris::findOrFail($request->input('kategori_id'));
 
-        // Gunakan getAttribute untuk mengakses nama_kategori
+        // Tentukan FormRequest spesifik berdasarkan kategori
         $formattedName = 'Aset' . str_replace(' ', '', $kategori->nama_kategori);
         $requestClass = 'App\\Http\\Requests\\' . $formattedName . 'Request';
 
         try {
             DB::beginTransaction();
 
+            // Validasi pakai FormRequest
             $validated = $this->validateRequest($request, $requestClass);
 
+            // ⚡️ Generate ulang kode untuk memastikan unik
+            $validated['kode_inventaris'] = $this->kodeInventarisService
+                ->generateKode($validated['kategori_id']);
+
+            // Simpan data utama inventaris
             $inventaris = Inventaris::create([
                 'kategori_id' => $validated['kategori_id'],
                 'nama_barang' => $validated['nama_barang'],
@@ -151,7 +135,6 @@ class InventarisController extends Controller
 
             $this->asetHandlerService->storeDetailAset($validated, $inventaris);
 
-            // Gunakan createLog method
             LogAktivitas::createLog(
                 Auth::id(),
                 'tambah',
@@ -164,11 +147,13 @@ class InventarisController extends Controller
                 ->with('success', 'Inventaris berhasil ditambahkan');
         } catch (Exception $e) {
             DB::rollBack();
+
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+
 
     public function show(Inventaris $inventaris)
     {
@@ -394,6 +379,19 @@ class InventarisController extends Controller
         }
     }
 
+    public function generateKodeAjax(Request $request)
+    {
+        $request->validate([
+            'kategori_id' => 'required|exists:kategori_inventaris,id',
+        ]);
+
+        try {
+            $kode = $this->kodeInventarisService->generateKode($request->kategori_id);
+            return response()->json(['kode' => $kode]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Gagal membuat kode: ' . $e->getMessage()], 500);
+        }
+    }
 
     public function getKategoriDetail($id)
     {
