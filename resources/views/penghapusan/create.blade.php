@@ -5,12 +5,12 @@
 @section('styles')
     {{-- PENTING: Load CSS index terlebih dahulu untuk mendapatkan variabel --}}
     <link rel="stylesheet" href="{{ asset('css/inventaris-index.css') }}">
-        {{-- CSS SPESIFIK UNTUK HALAMAN CREATE & EDIT --}}
-        <link rel="stylesheet" href="{{ asset('css/inventaris-create.css') }}">
-        {{-- Google Font Inter --}}
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {{-- CSS SPESIFIK UNTUK HALAMAN CREATE & EDIT --}}
+    <link rel="stylesheet" href="{{ asset('css/inventaris-create.css') }}">
+    {{-- Google Font Inter --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             </div>
 
             {{-- Progress Steps dengan desain konsisten - Untuk Delete, fokus pada konfirmasi --}}
-            <div class="progress-container"> 
+            <div class="progress-container">
                 <div class="steps-progress">
                     <div class="step completed" data-step="1">
                         <div class="step-circle">
@@ -126,7 +126,8 @@
                 </div>
                 <div class="alert-content">
                     <div class="alert-title">Peringatan Penting!</div>
-                    <p class="mb-0">Proses penghapusan ini bersifat permanen dan tidak dapat dibatalkan. Pastikan Anda telah mempertimbangkan keputusan ini dengan matang dan memiliki dokumen pendukung yang valid.</p>
+                    <p class="mb-0">Proses penghapusan ini bersifat permanen dan tidak dapat dibatalkan. Pastikan Anda telah
+                        mempertimbangkan keputusan ini dengan matang dan memiliki dokumen pendukung yang valid.</p>
                 </div>
             </div>
         </div>
@@ -195,7 +196,8 @@
                                         <span class="detail-label">Nilai Aset</span>
                                         <span class="detail-value">
                                             @if($inventaris->harga_perolehan)
-                                                Rp {{ number_format($inventaris->harga_perolehan * $inventaris->jumlah, 0, ',', '.') }}
+                                                Rp
+                                                {{ number_format($inventaris->harga_perolehan * $inventaris->jumlah, 0, ',', '.') }}
                                             @else
                                                 -
                                             @endif
@@ -231,9 +233,10 @@
 
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label for="tanggal_penghapusan" class="form-label">Tanggal Penghapusan <span class="text-danger">*</span></label>
+                            <label for="tanggal_penghapusan" class="form-label">Tanggal Penghapusan <span
+                                    class="text-danger">*</span></label>
                             <input type="date" class="form-control @error('tanggal_penghapusan') is-invalid @enderror"
-                                id="tanggal_penghapusan" name="tanggal_penghapusan" 
+                                id="tanggal_penghapusan" name="tanggal_penghapusan"
                                 value="{{ old('tanggal_penghapusan', date('Y-m-d')) }}" max="{{ date('Y-m-d') }}" required>
                             <div class="form-text">Tanggal tidak boleh lebih dari hari ini</div>
                             @error('tanggal_penghapusan')
@@ -242,7 +245,8 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="nomor_berita_acara" class="form-label">Nomor Berita Acara <span class="text-danger">*</span></label>
+                            <label for="nomor_berita_acara" class="form-label">Nomor Berita Acara <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('nomor_berita_acara') is-invalid @enderror"
                                 id="nomor_berita_acara" name="nomor_berita_acara" value="{{ old('nomor_berita_acara') }}"
                                 placeholder="Contoh: BA/PENGHAPUSAN/001/2024" required>
@@ -253,7 +257,8 @@
                         </div>
 
                         <div class="col-12">
-                            <label for="alasan_penghapusan" class="form-label">Alasan Penghapusan <span class="text-danger">*</span></label>
+                            <label for="alasan_penghapusan" class="form-label">Alasan Penghapusan <span
+                                    class="text-danger">*</span></label>
                             <textarea class="form-control @error('alasan_penghapusan') is-invalid @enderror"
                                 id="alasan_penghapusan" name="alasan_penghapusan" rows="4"
                                 placeholder="Jelaskan dengan detail alasan aset ini dihapus dari inventaris (contoh: Rusak berat tidak dapat diperbaiki, hilang/dicuri, habis masa pakai, dll.)"
@@ -265,7 +270,8 @@
                         </div>
 
                         <div class="col-12">
-                            <label for="file_berita_acara" class="form-label">Upload File Berita Acara <span class="text-danger">*</span></label>
+                            <label for="file_berita_acara" class="form-label">Upload File Berita Acara <span
+                                    class="text-danger">*</span></label>
                             <div class="file-upload-area">
                                 <input type="file" class="form-control @error('file_berita_acara') is-invalid @enderror"
                                     id="file_berita_acara" name="file_berita_acara" accept=".pdf" required>
@@ -277,7 +283,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-text">Upload berita acara penghapusan yang telah ditandatangani dalam format PDF</div>
+                            <div class="form-text">Upload berita acara penghapusan yang telah ditandatangani dalam format
+                                PDF</div>
                             @error('file_berita_acara')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -310,7 +317,8 @@
                         </div>
                         <div class="alert-content">
                             <div class="alert-title">Konfirmasi Terakhir</div>
-                            <p class="mb-0">Tinjau sekali lagi data di bawah ini. Setelah dikonfirmasi, aset akan dihapus permanen dan tidak dapat dikembalikan.</p>
+                            <p class="mb-0">Tinjau sekali lagi data di bawah ini. Setelah dikonfirmasi, aset akan dihapus
+                                permanen dan tidak dapat dikembalikan.</p>
                         </div>
                     </div>
 
@@ -367,7 +375,8 @@
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="konfirmasi_final" required>
                             <label class="form-check-label" for="konfirmasi_final">
-                                <strong>Saya memahami bahwa tindakan ini tidak dapat dibatalkan</strong> dan akan menghapus aset secara permanen dari sistem inventaris.
+                                <strong>Saya memahami bahwa tindakan ini tidak dapat dibatalkan</strong> dan akan menghapus
+                                aset secara permanen dari sistem inventaris.
                             </label>
                         </div>
                     </div>
@@ -462,6 +471,7 @@
                 // Validasi tanggal tidak boleh di masa depan
                 const tanggal = new Date($('#tanggal_penghapusan').val());
                 const today = new Date();
+                tanggal.setHours(0, 0, 0, 0);
                 today.setHours(0, 0, 0, 0);
 
                 if (tanggal > today) {

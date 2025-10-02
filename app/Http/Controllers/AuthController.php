@@ -81,6 +81,6 @@ class AuthController extends Controller
 
         // 5. Redirect ke halaman yang sesuai (untuk sementara ke login dulu)
         // Nanti kita akan buat halaman khusus untuk Viewer
-        return redirect()->intended('dashboard')->with('success', 'Registrasi berhasil! Silakan login.');
+        return redirect()->intended('/login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 }
